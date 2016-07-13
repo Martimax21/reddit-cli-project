@@ -1,4 +1,5 @@
 var request = require('request');
+var requestAsJson = require('./Library/requestjson.js');
 
 /*
 This function should "return" the default homepage posts as an array of objects
@@ -6,21 +7,27 @@ This function should "return" the default homepage posts as an array of objects
 function getHomepage(callback) {
   // Load reddit.com/.json and call back with the array of posts
   // TODO: REPLACE request with requestAsJson!
-  request('https://reddit.com/.json', function(err, res) {
-    if (err) {
-      callback(err);
-    }
-    else {
-      try {
-        var response = JSON.parse(res.body);
-        callback(null, response.data.children); // look at the result and explain why we're returning .data.children
-      }
-      catch(e) {
-        callback(e);
-      }
-    }
-  });
+  var URLHomepage = "http://www.reddit.com/.json";
+  console.log("hi");
+  requestAsJson(URLHomepage, function(err, res) {
+   if(err) {
+     console.log("Whoops!");
+   }
+   else {
+     var homepageObjects = res.data.children;
+    // children is an object that contains the array of data objects that 
+    //we are looking for and children is a property of the "first" object data
+     callback(null, homepageObjects);
+   }
+   
+ });
 }
+
+getHomepage(function(err, res){
+  console.log(res);
+})
+
+
 
 /*
 This function should "return" the default homepage posts as an array of objects.
