@@ -3,18 +3,25 @@ var requestAsJson = require('./requestjson.js');
 
 
 /*
-This function should "return" the default homepage posts as an array of objects
+These are all functions used to access different pages on Reddit, such as
+Homepage, Subreddits categories, user's choice of Subreddit and sorted version
+of these pages.
 */
+
+/* getHomepage uses requestAsJson to parse the .json homepage and returns 
+the callback with an array of objects; each object is a reddit 
+post on the homepage. 
+*/
+
 function getHomepage(callback) {
   // Load reddit.com/.json and call back with the array of posts
-  // TODO: REPLACE request with requestAsJson!
   var URLHomepage = "https://www.reddit.com/.json";
-  requestAsJson(URLHomepage,function(err, res) {
+  requestAsJson(URLHomepage,function(err, homepageParsed) {
    if(err) {
      console.log("Whoops!");
    }
    else {
-     var homepageObjects = res.data.children;
+     var homepageObjects = homepageParsed.data.children;
     // children is an object that contains the array of data objects that 
     //we are looking for and children is a property of the "first" object data
      callback(null,homepageObjects);
@@ -30,49 +37,48 @@ function getHomepage(callback) {
 
 
 /*
-This function should "return" the default homepage posts as an array of objects.
-In contrast to the `getHomepage` function, this one accepts a `sortingMethod` parameter.
+getSortedHomepage "returns" the default homepage posts as an array of 
+objects. In contrast to the `getHomepage` function, this one accepts a 
+`sortingMethod` parameter. The sorting method can be any of the "tabs" 
+on the reddit homepage
 */
 function getSortedHomepage(sortingMethod, callback) {
   // Load reddit.com/{sortingMethod}.json and call back with the array of posts
   // Check if the sorting method is valid based on the various Reddit sorting methods
   var URLHomepageSorted = "https://www.reddit.com/" + sortingMethod + ".json";
-  requestAsJson(URLHomepageSorted, function(err, res) {
+  requestAsJson(URLHomepageSorted, function(err, sortedHomepageParsed) {
         if (err) {
           console.log("Whoops! It is not a valid category.");
         }
         else {
-          var homepageObjects = res.data.children;
-          callback(null, homepageObjects);
+          var sortedHomepageObjects = sortedHomepageParsed.data.children;
+          callback(null, sortedHomepageObjects);
         }
 
   });    
 }
 
-// getSortedHomepage("controversial", function(err, res) {
-//   console.log(res);
-// })
+
 
 /*
-This function should "return" the posts on the front page of a subreddit as an array of objects.
+The getSubreddit function "returns" the posts on the front page of a subreddit 
+as an array of objects.
 */
 function getSubreddit(subreddit, callback) {
   // Load reddit.com/r/{subreddit}.json and call back with the array of posts
   var URLSubreddit = "https://www.reddit.com/r/" + subreddit + ".json";
-  requestAsJson(URLSubreddit, function(err, res) {
+  requestAsJson(URLSubreddit, function(err, subredditChoiceParsed) {
     if (err) {
       console.log("Whoops! It is not a valid subreddit.");
     }
     else {
-      var homepageObjects = res.data.children;
-      callback(null, homepageObjects);
+      var subredditObjects = subredditChoiceParsed.data.children;
+      callback(null, subredditObjects);
     }
 
   });
 }
-//getSubreddit("funny", function (err, res) {
- // console.log(res);
-//})
+
 
 /*
 This function should "return" the posts on the front page of a subreddit as an array of objects.
@@ -82,13 +88,13 @@ function getSortedSubreddit(subreddit, sortingMethod, callback) {
   // Load reddit.com/r/{subreddit}/{sortingMethod}.json and call back with the array of posts
   // Check if the sorting method is valid based on the various Reddit sorting methods
   var URLSubRSortingMethod = "https://www.reddit.com/r/" + subreddit + "/" + sortingMethod + ".json";
-  requestAsJson(URLSubRSortingMethod, function(err, res) {
+  requestAsJson(URLSubRSortingMethod, function(err, sortedSubredditParsed) {
     if (err) {
       console.log("Whoops! It is not a valid method or subreddit.");
     }
     else {
-      var homepageObjects = res.data.children;
-      callback(null, homepageObjects);
+      var sortedSubredditObjects = sortedSubredditParsed.data.children;
+      callback(null, sortedSubredditObjects);
     }
 
   });
@@ -102,13 +108,13 @@ This function should "return" all the popular subreddits
 function getSubreddits(callback) {
   // Load reddit.com/subreddits.json and call back with an array of subreddits
   var URLSubreddit = "https://www.reddit.com/subreddits.json";
-  requestAsJson(URLSubreddit, function(err, res) {
+  requestAsJson(URLSubreddit, function(err, subredditListParsed) {
     if (err) {
       console.log("Whoops! It is not a valid subreddit.");
     }
     else {
-      var homepageObjects = res.data.children;
-      callback(null, homepageObjects);
+      var subredditList = subredditListParsed.data.children;
+      callback(null, subredditList);
     }
 
   });
