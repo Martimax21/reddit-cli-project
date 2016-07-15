@@ -1,7 +1,38 @@
 var request = require('request');
 var requestAsJson = require('./requestjson.js');
+var imageToAscii = require("image-to-ascii");
 
 
+function displayImage(userPick) {
+  var userPickLowerCase = userPick.toLowerCase();
+  if (userPickLowerCase.indexOf(".jpg") > -1 || userPickLowerCase.indexOf(".jpeg") > -1 ||
+    userPickLowerCase.indexOf(".png") > -1) {
+
+    imageToAscii(userPick, (err, converted) => {
+      console.log(err || converted);
+    });
+  }
+  else {
+    console.log("URL: " + userPick + "\n");
+  }
+}
+ function getComments(answerChoice, callback) {
+   var URLcomments = ("https://www.reddit.com/" + answerChoice + ".json");
+   requestAsJson(URLcomments, function(err, commentsParsed) {
+     if (err) {
+       console.log("Whoops! It is not a valid category.");
+     }
+     else {
+      var commentObjects = commentsParsed[1].data.children;
+      callback(null, commentObjects);
+     }
+   });
+ }
+
+// function getReply(listOfComments) {
+  
+// }
+ 
 /*
 These are all functions used to access different pages on Reddit, such as
 Homepage, Subreddits categories, user's choice of Subreddit and sorted version
@@ -29,6 +60,21 @@ function getHomepage(callback) {
    
  });
 }
+// function getComments(callback) {
+//             var URLcomments = ("https://www.reddit.com/" + answers.displayChoices.data.permalink);
+//             console.log(URLcomments);
+//             requestAsJson(URLcomments, function(err, commentsParsed) {
+//               if (err) {
+//                 console.log("Whoops! It is not a valid category.");
+//                 console.log("here is the bug");
+//               }
+//               else {
+//                 var commentObjects = commentsParsed[1].data.children;
+//                 console.log(commentObjects);
+//                 callback(null, commentObjects);
+//               }
+//             });
+//           }
 
 //getHomepage(function(err, res){
 //  console.log(res);
@@ -120,6 +166,7 @@ function getSubreddits(callback) {
   });
 }
 
+
 // getSubreddits(function (err, res) {
 // console.log(res);
 // })
@@ -130,5 +177,7 @@ module.exports = {
     getSortedHomepage : getSortedHomepage,
     getSubreddit : getSubreddit,
     getSubreddits : getSubreddits,
-    getSortedSubreddit : getSortedSubreddit
+    getSortedSubreddit : getSortedSubreddit,
+    displayImage : displayImage,
+    getComments : getComments
 };
