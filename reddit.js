@@ -35,7 +35,7 @@ function reddit() {
   inquirer.prompt({
     type: 'list',
     name: 'menu',
-    message: clc.red('What do you want to do? \n'),
+    message: clc.bgBlueBright.yellowBright('What do you want to do? \n'),
     choices: menuChoices
   }).then(function(menuChoice) {
 
@@ -51,7 +51,7 @@ function reddit() {
     else if (menuChoice.menu === "SUBREDDIT") {
       inquirer.prompt({
         name: 'choose',
-        message: 'Pick a subreddit to display'
+        message: clc.bgRedBright.yellowBright('Pick a subreddit to display')
       }).then(function(subredditUserChoice) {
         functions.getSubreddit(subredditUserChoice.choose, function(err, posts) {
           var listOfUserSubredditPosts = posts.map(formatting.formatList);
@@ -72,7 +72,7 @@ function reddit() {
         inquirer.prompt({
           type: 'list',
           name: 'subredditMenu',
-          message: 'Which subreddit do you want to pick?',
+          message: clc.bgRedBright.yellowBright('Which subreddit do you want to pick?'),
           choices: subredditChoices
         }).then(function(answers) {
           //BACK OPTION (to main homepage)
@@ -94,7 +94,7 @@ function reddit() {
     }
     //To quit whole Reddit program, QUIT option (located in the main menu):
     else if (menuChoice.menu === "QUIT") {
-      console.log("Thanks for browsing! Have a really, really, really good day!");
+      console.log(clc.bgCyanBright.whiteBright("Thanks for browsing! Have a really, really, really good day!"));
       return;
     }
   });

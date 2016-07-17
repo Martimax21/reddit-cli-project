@@ -24,7 +24,7 @@ function mainMenuOrExit(callback) {
     choices: returnMenuChoices
   }).then(function(answers) {
     if (answers.exitMenu === "QUIT") {
-      console.log("Thanks for browsing! Have a damn good day!");
+      console.log(clc.bgCyanBright.whiteBright("Thanks for browsing! Have a damn good day!"));
       return;
     }
     else {
@@ -71,17 +71,6 @@ function userPick(listOfPick, callback) {
       
       getReplies(comments, 1);
       
-      // var listOfComments = comments.map(function(comment) {
-      //   return comment.data.body;
-      // });
-      // listOfComments.forEach(function(comment){
-      //   console.log(comment);
-      //   getReplies();
-      // })
-      // listOfComments.forEach(function (comment) {
-      //   console.log("Comment: " + comment);
-      //   console.log("");
-      // });
       
     });
 

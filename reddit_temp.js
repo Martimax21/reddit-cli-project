@@ -53,3 +53,16 @@ var commentObjects = commentsParsed[1].data.children;
 // //          console.log("BUGGG");
 // //         return comment.data.body;
 //         });
+
+
+      // var listOfComments = comments.map(function(comment) {
+      //   return comment.data.body;
+      // });
+      // listOfComments.forEach(function(comment){
+      //   console.log(comment);
+      //   getReplies();
+      // })
+      // listOfComments.forEach(function (comment) {
+      //   console.log("Comment: " + comment);
+      //   console.log("");
+      // });
