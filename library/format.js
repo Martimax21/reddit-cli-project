@@ -7,14 +7,8 @@ function formatPost(post) {
     "Username: "  + post.data.author
   ].join("\n");
 }
-// function formatComment(comment) {
-//   return [
-//     "Comment: " + comment.data.body,
-//     "Reply1: " + post.data.,
-//     "Score: " + post.data.score,
-//     "Username: "  + post.data.author
-//   ].join("\n");
-// }
+
+
 function formatList(item) {
   return {
     name: item.data.title,

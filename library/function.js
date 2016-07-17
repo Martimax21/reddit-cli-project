@@ -2,7 +2,7 @@ var request = require('request');
 var requestAsJson = require('./requestjson.js');
 var imageToAscii = require("image-to-ascii");
 
-
+// if post's URL ends in or contains .jpd, .jpeg, .png, image will be shown in ASCII characters
 function displayImage(userPick) {
   var userPickLowerCase = userPick.toLowerCase();
   if (userPickLowerCase.indexOf(".jpg") > -1 || userPickLowerCase.indexOf(".jpeg") > -1 ||
@@ -15,6 +15,8 @@ function displayImage(userPick) {
   else {
     console.log("URL: " + userPick + "\n");
   }
+  
+//function to access comments listed in post. Function called in userPick (site-map-function.js)  
 }
  function getComments(answerChoice, callback) {
    var URLcomments = ("https://www.reddit.com/" + answerChoice + ".json");
@@ -29,7 +31,7 @@ function displayImage(userPick) {
    });
  }
 
-// function getReply(listOfComments) {
+
   
 // }
  

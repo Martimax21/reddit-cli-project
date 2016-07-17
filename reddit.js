@@ -1,9 +1,10 @@
-// Node modules
+//other files being accessed in main reddit function
 
 var functions = require('./library/function');
 var formatting = require('./library/format');
 var siteMap = require('./library/site-map-function');
 
+// Node modules
 var request = require('request');
 var inquirer = require('inquirer');
 var clear = require('clear');
@@ -31,7 +32,7 @@ function reddit() {
     name: 'Quit',
     value: 'QUIT'
   }];
-
+//user prompt to pick from menu
   inquirer.prompt({
     type: 'list',
     name: 'menu',
@@ -44,6 +45,8 @@ function reddit() {
     if (menuChoice.menu === "HOMEPAGE") {
       functions.getHomepage(function(err, posts) {
         var listOfHMPosts = posts.map(formatting.formatList);
+        
+        //userPick function in site-map-function.js to handle user pick
         siteMap.userPick(listOfHMPosts, restartReddit);
       });
     }
@@ -114,14 +117,3 @@ function restartReddit(err, res) {
 
 
 
-// Feature: comments listing :star::star::star:
-
-// When the user is shown a list of posts, instead of going back to the main menu every post 
-// should be selectable – again using inquirer. When selecting a post, the user should be shown a 
-// listing of comments for that post. Since comments are threaded – replies to replies to replies … –
-// we would like to indent each level of comments , perhaps by two or three spaces. To do this properly,
-// we can make use of the word-wrap NPM module. After displaying the list of threaded comments, display the main 
-// menu again.
-
-// One of the difficulties of implementing this feature is to properly iterate through the comments and their replies. 
-// To do this, you will first have to analyze the way the comment listing is presented in the JSON.
